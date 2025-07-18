@@ -5,10 +5,11 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [text, setText] = useState("");
   const [error, setError] = useState(null);
+  const API = import.meta.env.VITE_API_URL;
 
   const loadTasks = () => {
     axios
-      .get("https://todo-backend-qztw.onrender.com/api/tasks")
+      .get(`${API}/api/tasks`)
       .then((res) => {
         setTasks(res.data);
         setError(null);
@@ -23,7 +24,7 @@ function App() {
   const addTask = () => {
     if (text.trim() === "") return;
     axios
-      .post("https://todo-backend-qztw.onrender.com/api/tasks", { title: text })
+      .post(`${API}/api/tasks`, { title: text })
       .then(() => {
         setText("");
         loadTasks();
@@ -33,7 +34,7 @@ function App() {
 
   const toggleComplete = (task) => {
     axios
-      .put(`https://todo-backend-qztw.onrender.com/api/tasks/${task.id}`, {
+      .put(`${API}/api/tasks/${task.id}`, {
         completed: !task.completed,
       })
       .then(loadTasks)
@@ -42,7 +43,7 @@ function App() {
 
   const deleteTask = (id) => {
     axios
-      .delete(`https://todo-backend-qztw.onrender.com/api/tasks/${id}`)
+      .delete(`${API}/api/tasks/${id}`)
       .then(loadTasks)
       .catch(() => setError("Failed to delete task"));
   };
