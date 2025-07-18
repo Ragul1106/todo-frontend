@@ -8,6 +8,7 @@ function App() {
   const [text, setText] = useState("");
   const [error, setError] = useState(null);
 
+
   const loadTasks = () => {
     axios
       .get(`${BASE_URL}/api/tasks`)
