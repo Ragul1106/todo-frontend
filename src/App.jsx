@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+const BASE_URL = "https://todo-backend-qztw.onrender.com";
+
 function App() {
   const [tasks, setTasks] = useState([]);
   const [text, setText] = useState("");
   const [error, setError] = useState(null);
-  const API = import.meta.env.VITE_API_URL;
 
   const loadTasks = () => {
     axios
-      .get(`${API}/api/tasks`)
+      .get(`${BASE_URL}/api/tasks`)
       .then((res) => {
         setTasks(res.data);
         setError(null);
@@ -24,7 +25,7 @@ function App() {
   const addTask = () => {
     if (text.trim() === "") return;
     axios
-      .post(`${API}/api/tasks`, { title: text })
+      .post(`${BASE_URL}/api/tasks`, { title: text })
       .then(() => {
         setText("");
         loadTasks();
@@ -34,7 +35,7 @@ function App() {
 
   const toggleComplete = (task) => {
     axios
-      .put(`${API}/api/tasks/${task.id}`, {
+      .put(`${BASE_URL}/api/tasks/${task.id}`, {
         completed: !task.completed,
       })
       .then(loadTasks)
@@ -43,7 +44,7 @@ function App() {
 
   const deleteTask = (id) => {
     axios
-      .delete(`${API}/api/tasks/${id}`)
+      .delete(`${BASE_URL}/api/tasks/${id}`)
       .then(loadTasks)
       .catch(() => setError("Failed to delete task"));
   };
