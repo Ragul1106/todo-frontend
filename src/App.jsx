@@ -2,9 +2,15 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { RiHeartAdd2Fill } from "react-icons/ri";
+import { Listbox } from "@headlessui/react";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
 const BASE_URL = "https://todo-backend-qztw.onrender.com";
-const priorities = ["Low", "Medium", "High"];
+const priorities = [
+  { name: "Low", color: "text-green-600" },
+  { name: "Medium", color: "text-yellow-600" },
+  { name: "High", color: "text-red-600" },
+];
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
@@ -88,13 +94,42 @@ const App = () => {
             onChange={(e) => setDueDate(e.target.value)}
             className="p-3 border border-purple-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400"
           />
-          <select
-            value={priority}
-            onChange={(e) => setPriority(e.target.value)}
-            className="p-3 border border-purple-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 text-purple-600 font-medium"
-          >
-            {priorities.map(p => <option key={p} value={p}>{p}</option>)}
-          </select>
+          <Listbox value={priority} onChange={setPriority}>
+            <div className="relative">
+              <Listbox.Button className="w-full p-3 border border-purple-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 text-left">
+                <span className={priorities.find(p => p.name === priority)?.color}>
+                   {priority}
+                </span>
+                <span className="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <ChevronUpDownIcon className="h-5 w-5 text-purple-500" />
+                </span>
+              </Listbox.Button>
+
+              <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-xl bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                {priorities.map((p) => (
+                  <Listbox.Option
+                    key={p.name}
+                    value={p.name}
+                    className={({ active }) =>
+                      `relative cursor-pointer select-none px-4 py-2 ${active ? "bg-purple-100" : ""
+                      }`
+                    }
+                  >
+                    {({ selected }) => (
+                      <>
+                        <span className={`${p.color} block truncate`}> {p.name}</span>
+                        {selected ? (
+                          <span className="absolute inset-y-0 right-4 flex items-center text-purple-600">
+                            <CheckIcon className="h-5 w-5" />
+                          </span>
+                        ) : null}
+                      </>
+                    )}
+                  </Listbox.Option>
+                ))}
+              </Listbox.Options>
+            </div>
+          </Listbox>
         </div>
 
         <button
@@ -126,8 +161,8 @@ const App = () => {
                       <p className="text-sm text-purple-700 mt-1">📅 {new Date(task.due_date).toLocaleString()}</p>
                     )}
                     <p className={`text-sm font-semibold mt-1 ${task.priority === "High" ? "text-red-500" :
-                        task.priority === "Medium" ? "text-yellow-600" :
-                          "text-green-600"
+                      task.priority === "Medium" ? "text-yellow-600" :
+                        "text-green-600"
                       }`}>
                       ⚡ Priority: {task.priority}
                     </p>
