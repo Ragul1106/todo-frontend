@@ -191,25 +191,21 @@ const App = () => {
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className={`text-lg font-semibold ${task.is_completed ? "line-through text-gray-400" : "text-gray-800"}`}>
-                      {task.title}
+                      {task.task_name}
                     </h3>
                     {task.description && (
                       <p className="text-sm text-gray-600 mt-1">🗒️ {task.description}</p>
                     )}
-                    {task.due_date && !isNaN(new Date(task.due_date)) && (
-                      <p className="text-sm text-blue-700 mt-1">
-                        📅 {new Date(task.due_date).toLocaleString()}
-                      </p>
+                    {task.due_date && (
+                      <p className="text-sm text-blue-700 mt-1">📅 {new Date(task.due_date).toLocaleString()}</p>
                     )}
-                    {task.priority && (
-                      <p className={`text-sm font-semibold mt-1 ${
-                        task.priority === "High" ? "text-red-500" :
-                        task.priority === "Medium" ? "text-yellow-600" :
-                        "text-green-600"
-                      }`}>
-                        ⚡ Priority: {task.priority}
-                      </p>
-                    )}
+                    <p className={`text-sm font-semibold mt-1 ${
+                      task.priority === "High" ? "text-red-500" :
+                      task.priority === "Medium" ? "text-yellow-600" :
+                      "text-green-600"
+                    }`}>
+                      ⚡ Priority: {task.priority}
+                    </p>
                   </div>
                   <div className="flex flex-col gap-2 items-end">
                     <button
