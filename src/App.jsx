@@ -230,7 +230,7 @@ const App = () => {
             value={text}
             onChange={(e) => setText(e.target.value)}
             className="p-3 border border-purple-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 placeholder:text-purple-400"
-            placeholder="🧠 Task Title"
+            placeholder=" Task Title"
           />
           <input
             value={description}
