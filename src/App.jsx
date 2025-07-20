@@ -157,6 +157,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
+import { RiHeartAdd2Fill } from "react-icons/ri";
 
 const BASE_URL = "https://todo-backend-qztw.onrender.com";
 const priorities = ["Low", "Medium", "High"];
@@ -253,10 +254,10 @@ const App = () => {
         </div>
 
         <button
-          className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 font-bold rounded-xl w-full transition-all duration-300 hover:scale-105 hover:from-purple-600 hover:to-pink-600"
+          className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 font-bold rounded-xl w-full transition-all duration-300 hover:scale-105 hover:from-purple-600 hover:to-pink-600 flex items-center justify-center gap-2 text-lg"
           onClick={addTask}
         >
-          ➕ Add Task
+          <RiHeartAdd2Fill className="text-2xl" /> Add Task
         </button>
 
         <ul className="mt-8 space-y-6">
@@ -280,11 +281,10 @@ const App = () => {
                     {task.due_date && (
                       <p className="text-sm text-purple-700 mt-1">📅 {new Date(task.due_date).toLocaleString()}</p>
                     )}
-                    <p className={`text-sm font-semibold mt-1 ${
-                      task.priority === "High" ? "text-red-500" :
-                      task.priority === "Medium" ? "text-yellow-600" :
-                      "text-green-600"
-                    }`}>
+                    <p className={`text-sm font-semibold mt-1 ${task.priority === "High" ? "text-red-500" :
+                        task.priority === "Medium" ? "text-yellow-600" :
+                          "text-green-600"
+                      }`}>
                       ⚡ Priority: {task.priority}
                     </p>
                   </div>
