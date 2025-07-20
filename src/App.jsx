@@ -175,7 +175,7 @@ const App = () => {
         </div>
 
         <button
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full transition-all duration-300"
+          className="bg-blue-600 text-white px-4 py-2 cursor-pointer rounded hover:bg-blue-700 w-full transition-all duration-300"
           onClick={addTask}
         >
           ➕ Add Task
@@ -213,13 +213,13 @@ const App = () => {
                   <div className="flex flex-col gap-2 items-end">
                     <button
                       onClick={() => toggleComplete(task)}
-                      className="text-xs text-green-700 hover:underline"
+                      className="text-xs text-green-700 cursor-pointer hover:underline"
                     >
                       {task.is_completed ? "✅ Undo" : "✔️ Done"}
                     </button>
                     <button
                       onClick={() => deleteTask(task.id)}
-                      className="text-xs text-red-700 hover:underline"
+                      className="text-xs text-red-700 cursor-pointer hover:underline"
                     >
                       🗑️ Delete
                     </button>
