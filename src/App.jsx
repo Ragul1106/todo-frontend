@@ -17,22 +17,15 @@ const App = () => {
       .catch(() => setError("❌ Could not load tasks"));
   };
 
-  useEffect(() => {
-    loadTasks();
-  }, []);
-
   const addTask = (taskData) => {
     axios.post(`${BASE_URL}/api/tasks`, taskData)
-      .then(() => loadTasks())
+      .then(loadTasks)
       .catch(() => setError("❌ Could not add task"));
   };
 
   const toggleComplete = (task) => {
     axios.put(`${BASE_URL}/api/tasks/${task.id}`, {
-      title: task.task_name,
-      description: task.description,
-      due_date: task.due_date,
-      priority: task.priority,
+      ...task,
       is_completed: !task.is_completed
     })
       .then(loadTasks)
@@ -45,6 +38,10 @@ const App = () => {
       .catch(() => setError("❌ Could not delete task"));
   };
 
+  useEffect(() => {
+    loadTasks();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-200 via-purple-300 to-pink-200 flex items-center justify-center p-8">
       <motion.div
@@ -56,9 +53,9 @@ const App = () => {
         <h1 className="text-4xl font-extrabold mb-6 text-center text-purple-800 drop-shadow-sm">✨ Task Organizer</h1>
         
         {error && <ErrorAlert message={error} />}
-
+        
         <AddTaskForm onAddTask={addTask} />
-
+        
         <TaskList
           tasks={tasks}
           onToggleComplete={toggleComplete}
@@ -70,6 +67,7 @@ const App = () => {
 };
 
 export default App;
+
 
 
 
