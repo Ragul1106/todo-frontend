@@ -15,9 +15,9 @@ const AddTaskForm = ({ onAddTask }) => {
     const [dueDate, setDueDate] = useState("");
     const [priority, setPriority] = useState("Medium");
 
-   const toUTCString = (datetimeLocal) => {
-  return new Date(datetimeLocal).toISOString();
-};
+    const toUTCString = (datetimeLocal) => {
+        return new Date(datetimeLocal).toISOString();
+    };
 
     const handleAdd = () => {
         if (!text.trim()) return;

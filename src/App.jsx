@@ -25,7 +25,10 @@ const App = () => {
 
   const toggleComplete = (task) => {
     axios.put(`${BASE_URL}/api/tasks/${task.id}`, {
-      ...task,
+      title: task.task_name,
+      description: task.description,
+      due_date: task.due_date,
+      priority: task.priority,
       is_completed: !task.is_completed
     })
       .then(loadTasks)
