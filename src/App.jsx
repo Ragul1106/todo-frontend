@@ -9,13 +9,9 @@ const BASE_URL = "https://todo-backend-qztw.onrender.com";
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
-  const [text, setText] = useState("");
-  const [description, setDescription] = useState("");
-  const [dueDate, setDueDate] = useState("");
-  const [priority, setPriority] = useState("Medium");
   const [error, setError] = useState("");
 
-   const loadTasks = () => {
+  const loadTasks = () => {
     axios.get(`${BASE_URL}/api/tasks`)
       .then((res) => setTasks(res.data))
       .catch(() => setError("❌ Could not load tasks"));
@@ -25,22 +21,13 @@ const App = () => {
     loadTasks();
   }, []);
 
-  const addTask = () => {
-    if (!text.trim()) return;
-    axios.post(`${BASE_URL}/api/tasks`, {
-      title: text,
-      description,
-      due_date: dueDate,
-      priority
-    })
-      .then(() => {
-        setText(""); setDescription(""); setDueDate(""); setPriority("Medium");
-        loadTasks();
-      })
+  const addTask = (taskData) => {
+    axios.post(`${BASE_URL}/api/tasks`, taskData)
+      .then(() => loadTasks())
       .catch(() => setError("❌ Could not add task"));
   };
 
-   const toggleComplete = (task) => {
+  const toggleComplete = (task) => {
     axios.put(`${BASE_URL}/api/tasks/${task.id}`, {
       title: task.task_name,
       description: task.description,
@@ -69,9 +56,9 @@ const App = () => {
         <h1 className="text-4xl font-extrabold mb-6 text-center text-purple-800 drop-shadow-sm">✨ Task Organizer</h1>
         
         {error && <ErrorAlert message={error} />}
-        
+
         <AddTaskForm onAddTask={addTask} />
-        
+
         <TaskList
           tasks={tasks}
           onToggleComplete={toggleComplete}
@@ -83,6 +70,7 @@ const App = () => {
 };
 
 export default App;
+
 
 
 
