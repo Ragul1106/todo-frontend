@@ -49,7 +49,7 @@ const TaskItem = ({ task, onToggleComplete, onDelete }) => {
                     </button>
                     <button
                         onClick={() => onDelete(task.id)}
-                        className="text-xs cursor-pointer  text-red-700 hover:underline"
+                        className="text-xs cursor-pointer mt-10 text-red-700 hover:underline"
                     >
                         🗑️ Delete
                     </button>
