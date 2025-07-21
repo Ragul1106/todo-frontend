@@ -43,13 +43,13 @@ const TaskItem = ({ task, onToggleComplete, onDelete }) => {
                 <div className="flex flex-col gap-2 items-end">
                     <button
                         onClick={() => onToggleComplete(task)}
-                        className="text-xs text-green-700 hover:underline"
+                        className="text-xs cursor-pointer text-green-700 hover:underline"
                     >
-                        {task.is_completed ? "✅ Undo" : "✔️ Done"}
+                        {task.is_completed ? " ↪ Undo" : "✔️ Done"}
                     </button>
                     <button
                         onClick={() => onDelete(task.id)}
-                        className="text-xs text-red-700 hover:underline"
+                        className="text-xs cursor-pointer mt-10 text-red-700 hover:underline"
                     >
                         🗑️ Delete
                     </button>

@@ -87,7 +87,7 @@ const AddTaskForm = ({ onAddTask }) => {
       <div className="sm:col-span-2">
         <button
           onClick={handleAdd}
-          className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 font-bold rounded-xl w-full flex items-center justify-center gap-2 text-lg hover:scale-105"
+          className="bg-gradient-to-r cursor-pointer from-purple-500 to-pink-500 text-white px-6 py-3 font-bold rounded-xl w-full flex items-center justify-center gap-2 text-lg hover:scale-105"
         >
           <RiHeartAdd2Fill className="text-2xl" />
           Add Task
