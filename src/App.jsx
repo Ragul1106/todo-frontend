@@ -9,23 +9,43 @@ const BASE_URL = "https://todo-backend-qztw.onrender.com";
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
+  const [text, setText] = useState("");
+  const [description, setDescription] = useState("");
+  const [dueDate, setDueDate] = useState("");
+  const [priority, setPriority] = useState("Medium");
   const [error, setError] = useState("");
 
-  const loadTasks = () => {
+   const loadTasks = () => {
     axios.get(`${BASE_URL}/api/tasks`)
       .then((res) => setTasks(res.data))
       .catch(() => setError("❌ Could not load tasks"));
   };
 
-  const addTask = (taskData) => {
-    axios.post(`${BASE_URL}/api/tasks`, taskData)
-      .then(loadTasks)
+  useEffect(() => {
+    loadTasks();
+  }, []);
+
+  const addTask = () => {
+    if (!text.trim()) return;
+    axios.post(`${BASE_URL}/api/tasks`, {
+      title: text,
+      description,
+      due_date: dueDate,
+      priority
+    })
+      .then(() => {
+        setText(""); setDescription(""); setDueDate(""); setPriority("Medium");
+        loadTasks();
+      })
       .catch(() => setError("❌ Could not add task"));
   };
 
-  const toggleComplete = (task) => {
+   const toggleComplete = (task) => {
     axios.put(`${BASE_URL}/api/tasks/${task.id}`, {
-      ...task,
+      title: task.task_name,
+      description: task.description,
+      due_date: task.due_date,
+      priority: task.priority,
       is_completed: !task.is_completed
     })
       .then(loadTasks)
@@ -37,10 +57,6 @@ const App = () => {
       .then(loadTasks)
       .catch(() => setError("❌ Could not delete task"));
   };
-
-  useEffect(() => {
-    loadTasks();
-  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-200 via-purple-300 to-pink-200 flex items-center justify-center p-8">
